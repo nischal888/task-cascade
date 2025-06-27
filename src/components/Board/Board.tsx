@@ -69,7 +69,7 @@ const Board: React.FC = () => {
 
 	return (
 		<DragDropContext onDragEnd={onDragEnd}>
-			<div className="flex items-start p-4 overflow-x-auto h-full">
+			<div className="flex items-start p-4 overflow-x-auto h-full bg-slate-100">
 				{board.columnOrder.map((columnId) => {
 					const column = board.columns[columnId];
 					const cards = column.cardIds.map((cardId) => board.cards[cardId]);

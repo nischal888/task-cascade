@@ -2,23 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-	@apply bg-slate-50 text-slate-800;
-	font-family: 'Inter', sans-serif;
+@layer base {
+	body {
+		@apply bg-slate-50 text-slate-800;
+		font-family: 'Inter var', 'Inter', sans-serif;
+	}
 }
 
-/* Custom scrollbar for a more modern look - works in WebKit browsers (Chrome, Safari) */
+/* Custom scrollbar  */
 ::-webkit-scrollbar {
-	width: 8px;
-	height: 8px;
+	width: 10px;
+	height: 10px;
 }
 ::-webkit-scrollbar-track {
-	background: #f1f5f9;
+	@apply bg-sky-100;
 }
 ::-webkit-scrollbar-thumb {
-	background: #94a3b8;
-	border-radius: 10px;
+	@apply bg-sky-400 rounded-full border-2 border-sky-100;
 }
 ::-webkit-scrollbar-thumb:hover {
-	background: #64748b;
+	@apply bg-sky-500;
 }

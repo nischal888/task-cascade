@@ -14,12 +14,15 @@ const Card: React.FC<CardTypeProps> = ({ card, index }) => {
 					{...provided.draggableProps}
 					{...provided.dragHandleProps}
 					className={`
-            bg-white rounded-md p-4 mb-3 shadow-md hover:shadow-lg 
-			transition-shadow duration-200 ease-in-out
-            ${snapshot.isDragging ? 'ring-2 ring-blue-500 shadow-xl' : ''}
+            p-3 my-2 rounded-md
+            bg-white text-slate-800
+            hover:bg-slate-50 transition-colors duration-200
+            cursor-grab shadow
+            border border-slate-200/80
+            ${snapshot.isDragging ? 'shadow-lg ring-2 ring-sky-500' : ''}
           `}
 				>
-					<p className="text-sm text-slate-700">{card.content}</p>
+					<p className="text-sm font-normal">{card.content}</p>
 				</div>
 			)}
 		</Draggable>
