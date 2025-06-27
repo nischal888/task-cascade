@@ -6,8 +6,65 @@ import { initialData } from '../../config/data';
 
 const Board: React.FC = () => {
 	const [board, setBoard] = useState<BoardStateType>(initialData);
+	console.log('board', board);
+
 	const onDragEnd = (result: DropResult) => {
-		console.log('Drag ended!', result);
+		console.log('result', result);
+		const { destination, draggableId, source } = result;
+		if (!destination) return;
+		if (
+			destination.droppableId === source.droppableId &&
+			destination.index === source.index
+		)
+			return;
+
+		const startColumn = board.columns[source.droppableId];
+		const endColumn = board.columns[destination.droppableId];
+		if (startColumn === endColumn) {
+			const newCardIds = Array.from(startColumn.cardIds);
+
+			newCardIds.splice(source.index, 1);
+			newCardIds.splice(destination.index, 0, draggableId);
+
+			const newColumn = {
+				...startColumn,
+				cardIds: newCardIds,
+			};
+
+			const newState: BoardStateType = {
+				...board,
+				columns: {
+					...board.columns,
+					[newColumn.id]: newColumn,
+				},
+			};
+			setBoard(newState);
+			return;
+		}
+
+		const startCardIds = Array.from(startColumn.cardIds);
+		startCardIds.splice(source.index, 1);
+		const newStartColumn = {
+			...startColumn,
+			cardIds: startCardIds,
+		};
+
+		const finishCardIds = Array.from(endColumn.cardIds);
+		finishCardIds.splice(destination.index, 0, draggableId);
+		const newFinishColumn = {
+			...endColumn,
+			cardIds: finishCardIds,
+		};
+
+		const newState: BoardStateType = {
+			...board,
+			columns: {
+				...board.columns,
+				[newStartColumn.id]: newStartColumn,
+				[newFinishColumn.id]: newFinishColumn,
+			},
+		};
+		setBoard(newState);
 	};
 
 	return (
