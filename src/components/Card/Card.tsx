@@ -1,5 +1,5 @@
 import { Draggable } from '@hello-pangea/dnd';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import type { CardType } from '../../types';
 
 interface CardTypeProps {
@@ -18,6 +18,15 @@ const Card: React.FC<CardTypeProps> = ({
 }) => {
 	const [isEditing, setIsEditing] = useState(false);
 	const [editText, setEditText] = useState(card.content);
+	const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+	useEffect(() => {
+		if (isEditing && textareaRef.current) {
+			textareaRef.current.focus();
+
+			textareaRef.current.select();
+		}
+	}, [isEditing]);
 
 	const handleDelete = (e: React.MouseEvent) => {
 		e.stopPropagation();
@@ -104,7 +113,7 @@ const Card: React.FC<CardTypeProps> = ({
             bg-white text-slate-800
             hover:bg-slate-50 transition-colors duration-200
             cursor-grab shadow border border-slate-200/80
-            ${snapshot.isDragging ? 'shadow-lg ring-2 ring-sky-500' : ''}
+            ${snapshot.isDragging ? 'shadow-lg ring-2 ring-sky-700' : ''}
           `}
 				>
 					{cardContent}

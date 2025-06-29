@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { cardCreated } from '../../store/features/board/BoardSlice';
+import { cardCreated } from '../../store/features/board/boardSlice';
 
 interface AddCardFormProps {
 	columnId: string;
