@@ -1,13 +1,23 @@
 import { Droppable } from '@hello-pangea/dnd';
 import Card from '../Card/Card';
 import type { CardType, ColumnType } from '../../types';
+import AddCardForm from '../AddCardForm/AddCardForm';
 
 interface ColumnProps {
 	cards: CardType[];
 	column: ColumnType;
+	onCreateCard: (columnId: string, cardContent: string) => void;
+	onDeleteCard: (cardId: string, columnId: string) => void;
+	onUpdateCard: (cardId: string, newContent: string) => void;
 }
 
-const Column: React.FC<ColumnProps> = ({ column, cards }) => {
+const Column: React.FC<ColumnProps> = ({
+	column,
+	cards,
+	onCreateCard,
+	onDeleteCard,
+	onUpdateCard,
+}) => {
 	return (
 		<div className="flex flex-col w-80 m-2 flex-shrink-0 bg-slate-100 rounded-lg shadow-md">
 			<div className="flex items-center justify-between p-3 rounded-t-lg bg-slate-200 border-b border-slate-300">
@@ -28,12 +38,22 @@ const Column: React.FC<ColumnProps> = ({ column, cards }) => {
             `}
 					>
 						{cards.map((card, index) => (
-							<Card key={card.id} card={card} index={index} />
+							<Card
+								key={card.id}
+								card={card}
+								index={index}
+								columnId={column.id}
+								onDeleteCard={onDeleteCard}
+								onUpdateCard={onUpdateCard}
+							/>
 						))}
 						{provided.placeholder}
 					</div>
 				)}
 			</Droppable>
+			<div>
+				<AddCardForm columnId={column.id} onCreateCard={onCreateCard} />
+			</div>
 		</div>
 	);
 };
