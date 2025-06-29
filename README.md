@@ -1,6 +1,6 @@
 # Task-Cascade
 
-<h3 align="center">A modern, type-safe, and performant Kanban board built with React and TypeScript.</h3>
+<h3 align="center">A simple, type-safe, and performant Kanban board built with React and TypeScript.</h3>
 
 ---
 
@@ -11,6 +11,7 @@
 ## Key Features
 
 - ✅ **Drag & Drop:** Smoothly move tasks between columns.
+- ✅ **CRUD:** Easily add, view, edit, and delete tasks.
 - ✅ **Responsive Design:** A clean and usable interface on both desktop and mobile.
 - ✅ **Type-Safe Codebase:** Built entirely with TypeScript.
 - ✅ **Local State Persistence:** Board state is saved to `localStorage`
