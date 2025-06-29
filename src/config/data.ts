@@ -5,7 +5,7 @@ export const initialData: BoardStateType = {
 		'card-1': { id: 'card-1', content: 'Welcome! Your first idea here.' },
 		'card-2': {
 			id: 'card-2',
-			content: 'Drag me to **In Progress** when you start.',
+			content: 'Drag me to *In Motion* when you start.',
 		},
 		'card-3': {
 			id: 'card-3',
