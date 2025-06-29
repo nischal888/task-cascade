@@ -35,7 +35,7 @@ const Board: React.FC = () => {
 
 	return (
 		<DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
-			<div className="flex items-start p-4 overflow-x-auto h-full bg-slate-100">
+			<div className="flex items-start p-4 overflow-x-auto h-full bg-slate-50">
 				{board.columnOrder.map((columnId) => {
 					const column = board.columns[columnId];
 					if (!column) return null;

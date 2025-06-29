@@ -69,10 +69,35 @@ export const boardSlice = createSlice({
 			state.cards[newCardId] = newCard;
 			state.columns[columnId].cardIds.push(newCardId);
 		},
+		cardDeleted: (
+			state,
+			action: PayloadAction<{ cardId: string; columnId: string }>
+		) => {
+			const { cardId, columnId } = action.payload;
+
+			// Filter the cardId out of the column's cardIds array
+			const column = state.columns[columnId];
+			column.cardIds = column.cardIds.filter((id) => id !== cardId);
+
+			// Delete the card from the master cards object
+			delete state.cards[cardId];
+		},
+		cardUpdated: (
+			state,
+			action: PayloadAction<{ cardId: string; newContent: string }>
+		) => {
+			const { cardId, newContent } = action.payload;
+
+			//  find the card by its ID and update its content
+			if (state.cards[cardId]) {
+				state.cards[cardId].content = newContent;
+			}
+		},
 	},
 });
 
 //  Export the action creator
-export const { cardMoved, cardCreated } = boardSlice.actions;
+export const { cardMoved, cardCreated, cardDeleted, cardUpdated } =
+	boardSlice.actions;
 
 export default boardSlice.reducer;

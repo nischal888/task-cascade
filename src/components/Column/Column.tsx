@@ -8,12 +8,7 @@ interface ColumnProps {
 	column: ColumnType;
 }
 
-const Column: React.FC<ColumnProps> = ({
-	column,
-	cards,
-	onDeleteCard,
-	onUpdateCard,
-}) => {
+const Column: React.FC<ColumnProps> = ({ column, cards }) => {
 	return (
 		<div className="flex flex-col w-80 m-2 flex-shrink-0 bg-slate-100 rounded-lg shadow-md">
 			<div className="flex items-center justify-between p-3 rounded-t-lg bg-slate-200 border-b border-slate-300">
@@ -39,8 +34,6 @@ const Column: React.FC<ColumnProps> = ({
 								card={card}
 								index={index}
 								columnId={column.id}
-								onDeleteCard={onDeleteCard}
-								onUpdateCard={onUpdateCard}
 							/>
 						))}
 						{provided.placeholder}

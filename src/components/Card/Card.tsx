@@ -1,24 +1,22 @@
 import { Draggable } from '@hello-pangea/dnd';
 import { useState, useRef, useEffect } from 'react';
 import type { CardType } from '../../types';
+import { useDispatch } from 'react-redux';
+import {
+	cardDeleted,
+	cardUpdated,
+} from '../../store/features/board/boardSlice';
 
 interface CardTypeProps {
 	card: CardType;
 	index: number;
 	columnId: string;
-	onDeleteCard: (cardId: string, columnId: string) => void;
-	onUpdateCard: (cardId: string, newContent: string) => void;
 }
-const Card: React.FC<CardTypeProps> = ({
-	card,
-	index,
-	columnId,
-	onDeleteCard,
-	onUpdateCard,
-}) => {
+const Card: React.FC<CardTypeProps> = ({ card, index, columnId }) => {
 	const [isEditing, setIsEditing] = useState(false);
 	const [editText, setEditText] = useState(card.content);
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
+	const dispatch = useDispatch();
 
 	useEffect(() => {
 		if (isEditing && textareaRef.current) {
@@ -28,9 +26,8 @@ const Card: React.FC<CardTypeProps> = ({
 		}
 	}, [isEditing]);
 
-	const handleDelete = (e: React.MouseEvent) => {
-		e.stopPropagation();
-		onDeleteCard(card.id, columnId);
+	const handleDelete = () => {
+		dispatch(cardDeleted({ cardId: card.id, columnId }));
 	};
 
 	const handleEditSubmit = (e: React.FormEvent) => {
@@ -40,7 +37,7 @@ const Card: React.FC<CardTypeProps> = ({
 			setEditText(card.content);
 			return;
 		}
-		onUpdateCard(card.id, editText); // now definitely defined
+		dispatch(cardUpdated({ cardId: card.id, newContent: editText }));
 		setIsEditing(false);
 	};
 
