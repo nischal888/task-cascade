@@ -1,23 +1,22 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { cardCreated } from '../../store/features/board/BoardSlice';
 
 interface AddCardFormProps {
 	columnId: string;
-	onCreateCard: (columnId: string, cardContent: string) => void;
 }
 
-const AddCardForm: React.FC<AddCardFormProps> = ({
-	columnId,
-	onCreateCard,
-}) => {
+const AddCardForm: React.FC<AddCardFormProps> = ({ columnId }) => {
 	const [isFormOpen, setIsFormOpen] = useState<boolean>(false);
 	const [cardTitle, setCardTitle] = useState<string>('');
 
+	const dispatch = useDispatch();
+
 	const handleFormSubmit = (e: React.FormEvent) => {
-		console.log('handleFormSubmit');
 		e.preventDefault();
 		if (!cardTitle.trim()) return;
-		console.log('handleFormSubmit');
-		onCreateCard(columnId, cardTitle);
+
+		dispatch(cardCreated({ columnId, cardContent: cardTitle }));
 		setCardTitle('');
 		setIsFormOpen(false);
 	};

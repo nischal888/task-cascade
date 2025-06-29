@@ -17,14 +17,12 @@ const initialState: BoardStateType = (() => {
 export const boardSlice = createSlice({
 	name: 'board',
 	initialState,
-	// 👇 UPDATE THE REDUCERS OBJECT
+	// Update the reducer object
 	reducers: {
-		// 2. Define the 'cardMoved' reducer
 		cardMoved: (state, action: PayloadAction<DropResult>) => {
 			const { destination, source, draggableId } = action.payload;
 
-			// The logic here is IDENTICAL to our old onDragEnd function,
-			// with one key difference: we can "mutate" the state directly!
+			// we can "mutate" the state directly!
 			if (!destination) return;
 			if (
 				destination.droppableId === source.droppableId &&
@@ -54,11 +52,27 @@ export const boardSlice = createSlice({
 			state.columns[startColumn.id].cardIds = startCardIds;
 			state.columns[finishColumn.id].cardIds = finishCardIds;
 		},
-		// We will add cardCreated, cardDeleted, etc. here later
+		cardCreated: (
+			state,
+			action: PayloadAction<{ columnId: string; cardContent: string }>
+		) => {
+			const { columnId, cardContent } = action.payload;
+
+			// The logic is identical to our old handleCreateCard function
+			const newCardId = `card-${Date.now()}`;
+			const newCard = {
+				id: newCardId,
+				content: cardContent,
+			};
+
+			// We can "mutate" state directly thanks to Immer
+			state.cards[newCardId] = newCard;
+			state.columns[columnId].cardIds.push(newCardId);
+		},
 	},
 });
 
-// 3. Export the action creator
-export const { cardMoved } = boardSlice.actions;
+//  Export the action creator
+export const { cardMoved, cardCreated } = boardSlice.actions;
 
 export default boardSlice.reducer;

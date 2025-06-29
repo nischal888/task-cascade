@@ -11,7 +11,6 @@ interface ColumnProps {
 const Column: React.FC<ColumnProps> = ({
 	column,
 	cards,
-	onCreateCard,
 	onDeleteCard,
 	onUpdateCard,
 }) => {
@@ -49,7 +48,7 @@ const Column: React.FC<ColumnProps> = ({
 				)}
 			</Droppable>
 			<div>
-				<AddCardForm columnId={column.id} onCreateCard={onCreateCard} />
+				<AddCardForm columnId={column.id} />
 			</div>
 		</div>
 	);
