@@ -6,5 +6,13 @@ export const store = configureStore({
 	},
 });
 
+store.subscribe(() => {
+	// Save the entire board state to localStorage whenever it changes
+	localStorage.setItem(
+		'taskCascadeState',
+		JSON.stringify(store.getState().board)
+	);
+});
+
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

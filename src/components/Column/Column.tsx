@@ -6,9 +6,6 @@ import AddCardForm from '../AddCardForm/AddCardForm';
 interface ColumnProps {
 	cards: CardType[];
 	column: ColumnType;
-	onCreateCard: (columnId: string, cardContent: string) => void;
-	onDeleteCard: (cardId: string, columnId: string) => void;
-	onUpdateCard: (cardId: string, newContent: string) => void;
 }
 
 const Column: React.FC<ColumnProps> = ({
