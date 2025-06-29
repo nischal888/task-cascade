@@ -1,5 +1,6 @@
 import { Draggable } from '@hello-pangea/dnd';
 import { useState, useRef, useEffect } from 'react';
+import toast from 'react-hot-toast';
 import type { CardType } from '../../types';
 import { useDispatch } from 'react-redux';
 import {
@@ -32,12 +33,18 @@ const Card: React.FC<CardTypeProps> = ({ card, index, columnId }) => {
 
 	const handleEditSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
-		if (!editText.trim()) {
-			setIsEditing(false);
-			setEditText(card.content);
+		const trimmedText = editText.trim();
+
+		if (!trimmedText) {
+			dispatch(cardDeleted({ cardId: card.id, columnId }));
+			toast('An empty thought flew away!', { icon: '🌬️' });
 			return;
 		}
-		dispatch(cardUpdated({ cardId: card.id, newContent: editText }));
+
+		if (trimmedText !== card.content) {
+			dispatch(cardUpdated({ cardId: card.id, newContent: trimmedText }));
+			toast.success('Card updated!');
+		}
 		setIsEditing(false);
 	};
 

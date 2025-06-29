@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import toast from 'react-hot-toast';
 import { cardCreated } from '../../store/features/board/boardSlice';
 
 interface AddCardFormProps {
@@ -14,7 +15,13 @@ const AddCardForm: React.FC<AddCardFormProps> = ({ columnId }) => {
 
 	const handleFormSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
-		if (!cardTitle.trim()) return;
+		const trimmedTitle = cardTitle.trim();
+		if (!trimmedTitle) {
+			toast.error(
+				'A blank page holds endless possibilities, but a card needs a task!'
+			);
+			return;
+		}
 
 		dispatch(cardCreated({ columnId, cardContent: cardTitle }));
 		setCardTitle('');
@@ -26,7 +33,7 @@ const AddCardForm: React.FC<AddCardFormProps> = ({ columnId }) => {
 			<form onSubmit={handleFormSubmit} className="p-2">
 				<textarea
 					autoFocus
-					placeholder="Enter a title for this card..."
+					placeholder="What’s on your mind?"
 					value={cardTitle}
 					onChange={(e) => setCardTitle(e.target.value)}
 					//onBlur={() => setIsFormOpen(false)} // Optional: close form if user clicks away
@@ -37,7 +44,7 @@ const AddCardForm: React.FC<AddCardFormProps> = ({ columnId }) => {
 						type="submit"
 						className="px-4 py-2 bg-sky-500 text-white rounded-md hover:bg-sky-600"
 					>
-						Add card
+						Let’s go!
 					</button>
 					<button
 						type="button"
@@ -58,7 +65,7 @@ const AddCardForm: React.FC<AddCardFormProps> = ({ columnId }) => {
 				className="flex items-center justify-start w-full p-2 rounded-md text-slate-500 hover:bg-slate-200/70"
 			>
 				<span className="text-xl mr-2">+</span>
-				Add a card
+				Add a new task
 			</button>
 		</>
 	);
